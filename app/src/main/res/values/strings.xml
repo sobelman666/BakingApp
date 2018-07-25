@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="title_recipestep_detail">RecipeStep Detail</string>
+    <string name="unnamed_recipe">Unnamed Recipe</string>
+    <string name="error_no_recipes">Could not retrieve recipes.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="msg_no_recipes">No recipes available.</string>
+    <string name="label_previous">Previous</string>
+    <string name="label_next">Next</string>
+</resources>
