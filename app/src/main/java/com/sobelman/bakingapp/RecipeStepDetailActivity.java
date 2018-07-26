@@ -39,12 +39,15 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_previous_step) Button mPreviousButton;
     @BindView(R.id.btn_next_step) Button mNextButton;
+    @BindView(R.id.detail_toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipestep_detail);
-        Toolbar toolbar = findViewById(R.id.detail_toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -57,8 +60,6 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         if (recipeName != null) {
             setTitle(recipeName);
         }
-
-        ButterKnife.bind(this);
 
         // save the index of the selected step in the list of steps and set the state of
         // the previous and next buttons as appropriate
@@ -82,6 +83,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
+            updateLayout();
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
@@ -101,26 +103,33 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     private void updateLayout() {
         AppBarLayout appBarLayout = findViewById(R.id.app_bar);
         LinearLayout buttonBar = findViewById(R.id.button_bar);
-        if (buttonBar != null) { // we're in landscape orientation
+        if (buttonBar != null) { // we're in landscape orientation on phone
+            ConstraintLayout layout = findViewById(R.id.layout_land_constraint);
+            ConstraintSet constraintSet = new ConstraintSet();
             if (TextUtils.isEmpty(mSteps.get(mCurrentIndex).getVideoUrl())
                     && TextUtils.isEmpty(mSteps.get(mCurrentIndex).getThumbnailUrl())) {
                 // no video, show app bar, description and buttons
                 appBarLayout.setVisibility(View.VISIBLE);
                 buttonBar.setVisibility(View.VISIBLE);
-                ConstraintLayout layout = findViewById(R.id.layout_land_constraint);
-                ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(layout);
+                constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.START,
+                        ConstraintSet.PARENT_ID, ConstraintSet.START);
                 constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.TOP,
                         R.id.app_bar, ConstraintSet.BOTTOM);
                 constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.BOTTOM,
                         R.id.button_bar, ConstraintSet.TOP);
-                constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.START,
-                        ConstraintSet.PARENT_ID, ConstraintSet.START);
-                constraintSet.applyTo(layout);
             } else {
                 appBarLayout.setVisibility(View.GONE);
                 buttonBar.setVisibility(View.GONE);
+                constraintSet.clone(layout);
+                constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.START,
+                        ConstraintSet.PARENT_ID, ConstraintSet.START);
+                constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.TOP,
+                        ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+                constraintSet.connect(R.id.recipestep_detail_container, ConstraintSet.BOTTOM,
+                        ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
             }
+            constraintSet.applyTo(layout);
         }
     }
 

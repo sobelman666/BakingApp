@@ -84,7 +84,7 @@ public class RecipeActivity extends AppCompatActivity {
     private void populateIngredientsList() {
         List<RecipeIngredient> ingredients = mRecipe.getIngredients();
         if (ingredients != null) {
-            String ingredientsDisplayText = DisplayUtils.getIngredientsDisplayText(ingredients);
+            String ingredientsDisplayText = DisplayUtils.getIngredientsDisplayText(ingredients, this);
             TextView ingredientsListTextView = findViewById(R.id.tv_ingredients_list);
             ingredientsListTextView.setText(ingredientsDisplayText);
         }

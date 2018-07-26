@@ -34,4 +34,13 @@ public class MainActivityTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tv_ingredients_list)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void clickRecipeClickStepOpensStep() {
+        onView(anyOf(withId(R.id.rv_recipe_list), withId(R.id.rv_recipe_grid)))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipestep_list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_video)).check(matches(isDisplayed()));
+    }
 }
